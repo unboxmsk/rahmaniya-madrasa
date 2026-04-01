@@ -29,7 +29,7 @@ const newsData = [
 
     date: "Nov 08",
 
-    description: "A grand celebration of abhu bhais birthday has birthday has been conducted by students of punji birthday has been conducted by students of punji birthday has been conducted by students of punji been conducted by students of punji institute of ailalam",
+    description: "A grand celebration of abhu bhais birthday has birthday has ",
 
     image: "https://drive.google.com/uc?export=view&id=1-QHh13bZ7ncFAvdULhNoVmrLnq-Ofyk7",
 
