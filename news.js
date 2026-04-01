@@ -25,11 +25,11 @@ IMPORTANT:
 
 const newsData = [ 
   {
-    title: "Abhu bhai birthday",
+    title: "abhu the bussiness tycoon",
 
     date: "Nov 08",
 
-    description: "A grand celebra  birthday has birthday has ",
+    description: "ranked no 1 at forbes  with 1200000000cr networth.",
 
     image: "https://drive.google.com/uc?export=view&id=1-QHh13bZ7ncFAvdULhNoVmrLnq-Ofyk7",
 
