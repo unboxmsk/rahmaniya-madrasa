@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Media Archive | Rahmaniya Higher Secondary Madrasa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;700;800&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f6f2ea;
+      --surface: rgba(255, 255, 255, .8);
+      --surface-strong: #fffdf8;
+      --text: #18201a;
+      --muted: #556155;
+      --primary: #0f5c3a;
+      --primary-deep: #0a462c;
+      --accent: #d5b768;
+      --shadow: 0 24px 60px rgba(8, 33, 21, .08);
+      --radius-xl: 32px;
+      --max-width: 1180px;
+      --nav-height: 84px
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      font-family: "Inter", sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at top left, rgba(213, 183, 104, .16), transparent 24%), radial-gradient(circle at right 10%, rgba(15, 92, 58, .08), transparent 20%), linear-gradient(180deg, #faf6ef 0%, var(--bg) 48%, #f3ede1 100%);
+      line-height: 1.6
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    img {
+      display: block;
+      max-width: 100%
+    }
+
+    .headline {
+      font-family: "Newsreader", serif;
+      letter-spacing: -.03em
+    }
+
+    .shell {
+      width: min(var(--max-width), calc(100% - 32px));
+      margin: 0 auto
+    }
+
+    .site-nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(249, 245, 238, .84);
+      box-shadow: 0 10px 40px rgba(8, 33, 21, .05)
+    }
+
+    .site-nav .shell {
+      min-height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px
+    }
+
+    .brand {
+      max-width: 520px;
+      font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+      font-weight: 800;
+      color: var(--primary-deep);
+      line-height: 1.15;
+      text-wrap: balance
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: flex-end
+    }
+
+    .nav-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: .96rem;
+      font-weight: 600;
+      transition: background-color .2s ease, color .2s ease, transform .2s ease
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible,
+    .nav-links .current {
+      background: rgba(15, 92, 58, .08);
+      color: var(--primary-deep);
+      outline: none
+    }
+
+    .nav-links .nav-cta {
+      background: linear-gradient(180deg, var(--primary) 0%, var(--primary-deep) 100%);
+      color: #fff;
+      box-shadow: 0 16px 36px rgba(15, 92, 58, .18)
+    }
+
+    .menu-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(15, 92, 58, .08);
+      color: var(--primary-deep);
+      cursor: pointer
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: currentColor;
+      box-shadow: 0 6px 0 currentColor, 0 -6px 0 currentColor
+    }
+
+    main {
+      padding-top: var(--nav-height)
+    }
+
+    .hero {
+      position: relative;
+      min-height: min(760px, 72vh);
+      display: grid;
+      align-items: center;
+      overflow: hidden;
+      color: #fff
+    }
+
+    .hero-media,
+    .hero-overlay {
+      position: absolute;
+      inset: 0
+    }
+
+    .hero-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(.42)
+    }
+
+    .hero-overlay {
+      background: linear-gradient(90deg, rgba(9, 26, 18, .84) 0%, rgba(9, 26, 18, .5) 48%, rgba(9, 26, 18, .18) 100%)
+    }
+
+    .hero-overlay::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: min(32vw, 360px);
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, rgba(213, 183, 104, .25), rgba(15, 92, 58, .28));
+      clip-path: polygon(100% 0, 0 100%, 100% 100%)
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      display: grid;
+      gap: 22px;
+      padding: 56px 0
+    }
+
+    .reveal-on-view {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .9s ease, transform .9s ease
+    }
+
+    .reveal-on-view.is-visible {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .82rem;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 44px;
+      height: 1px;
+      background: currentColor;
+      opacity: .8
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(3.3rem, 6vw, 6.3rem);
+      line-height: .96
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 640px;
+      font-size: 1.08rem;
+      color: rgba(255, 255, 255, .82)
+    }
+
+    section {
+      padding: 84px 0
+    }
+
+    .section-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 36px
+    }
+
+    .section-kicker {
+      margin: 0 0 12px;
+      color: var(--primary);
+      font-size: .8rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      font-weight: 700
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: clamp(2.25rem, 3vw, 3.4rem);
+      line-height: 1.04;
+      color: var(--primary-deep)
+    }
+
+    .section-header p {
+      margin: 14px 0 0;
+      max-width: 580px;
+      color: var(--muted)
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform .2s ease, box-shadow .2s ease
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      transform: translateY(-2px);
+      outline: none
+    }
+
+    .button-primary {
+      background: linear-gradient(180deg, #157147 0%, var(--primary-deep) 100%);
+      color: #fff;
+      box-shadow: 0 20px 40px rgba(15, 92, 58, .22)
+    }
+
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px
+    }
+
+    .archive-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      transition: transform .24s ease, box-shadow .24s ease
+    }
+
+    .archive-card img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      transition: transform .42s ease
+    }
+
+    .archive-card:hover,
+    .archive-card:focus-within,
+    .archive-card:active {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 30px 64px rgba(8, 33, 21, .14)
+    }
+
+    .archive-card:hover img,
+    .archive-card:focus-within img,
+    .archive-card:active img {
+      transform: scale(1.04)
+    }
+
+    .archive-body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      gap: 12px;
+      padding: 24px
+    }
+
+    .tag {
+      align-self: flex-start;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(213, 183, 104, .18);
+      color: var(--primary-deep);
+      font-size: .76rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-weight: 800
+    }
+
+    .archive-card h3 {
+      margin: 0;
+      color: var(--primary-deep);
+      font-size: 1.72rem;
+      line-height: 1.08
+    }
+
+    .archive-card p {
+      margin: 0;
+      color: var(--muted)
+    }
+
+    .archive-card .button {
+      margin-top: auto;
+      width: 100%
+    }
+
+    .highlight-strip {
+      padding: 0 0 96px
+    }
+
+    .quote-panel {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(15, 92, 58, .96), rgba(9, 39, 25, .96));
+      color: #fff;
+      padding: 38px 32px;
+      box-shadow: 0 30px 70px rgba(15, 92, 58, .22)
+    }
+
+    .quote-panel::before {
+      content: "";
+      position: absolute;
+      inset: auto auto -90px -60px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(213, 183, 104, .25), transparent 70%)
+    }
+
+    .quote-panel p {
+      position: relative;
+      margin: 0;
+      max-width: 760px;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      line-height: 1.2;
+      color: rgba(255, 255, 255, .92)
+    }
+
+    .site-footer {
+      padding: 28px 0 44px;
+      color: var(--muted)
+    }
+
+    .site-footer .shell {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: .95rem
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap
+    }
+
+    @media (max-width:980px) {
+      :root {
+        --nav-height: 96px
+      }
+
+      .site-nav .shell {
+        gap: 16px
+      }
+
+      .archive-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+      }
+
+      .section-header {
+        align-items: start;
+        flex-direction: column
+      }
+
+      .section-header p {
+        max-width: 100%
+      }
+    }
+
+    @media (max-width:760px) {
+      :root {
+        --nav-height: 84px
+      }
+
+      .shell {
+        width: min(var(--max-width), calc(100% - 28px))
+      }
+
+      .site-nav .shell {
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 0
+      }
+
+      .brand {
+        max-width: calc(100% - 64px);
+        font-size: 1rem
+      }
+
+      .menu-toggle {
+        display: inline-flex
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 14px;
+        right: 14px;
+        z-index: 5;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 12px;
+        border-radius: 22px;
+        background: rgba(249, 245, 238, .97);
+        box-shadow: 0 18px 40px rgba(8, 33, 21, .12);
+        backdrop-filter: blur(16px)
+      }
+
+      .site-nav.is-open .nav-links {
+        display: flex
+      }
+
+      .nav-links a {
+        font-size: .92rem;
+        padding: 12px 14px;
+        text-align: center
+      }
+
+      .hero {
+        min-height: auto
+      }
+
+      .hero-content {
+        gap: 18px;
+        padding: 40px 0 44px
+      }
+
+      .hero-overlay::after {
+        width: 210px
+      }
+
+      .eyebrow {
+        font-size: .72rem;
+        letter-spacing: .22em
+      }
+
+      .eyebrow::before {
+        width: 30px
+      }
+
+      .hero h1 {
+        font-size: clamp(2.35rem, 11vw, 3.8rem)
+      }
+
+      .hero p {
+        font-size: .98rem
+      }
+
+      .section-header {
+        margin-bottom: 28px
+      }
+
+      .section-header h2 {
+        font-size: clamp(1.9rem, 8vw, 2.45rem)
+      }
+
+      .section-header p {
+        margin-top: 10px;
+        font-size: .96rem
+      }
+
+      .button {
+        width: 100%;
+        min-height: 48px;
+        font-size: .95rem
+      }
+
+      .archive-grid {
+        grid-template-columns: 1fr
+      }
+
+      section {
+        padding: 64px 0
+      }
+
+      .archive-body,
+      .quote-panel {
+        padding: 22px
+      }
+
+      .quote-panel p {
+        font-size: clamp(1.3rem, 7vw, 1.8rem)
+      }
+
+      .site-footer .shell {
+        flex-direction: column;
+        align-items: flex-start;
+        font-size: .9rem
+      }
+    }
+
+    @media (max-width:520px) {
+      .shell {
+        width: min(var(--max-width), calc(100% - 20px))
+      }
+
+      .hero-content {
+        padding: 34px 0 38px
+      }
+
+      .hero h1 {
+        font-size: clamp(2.1rem, 11vw, 3rem)
+      }
+
+      .hero p,
+      .section-header p,
+      .archive-card p {
+        font-size: .94rem
+      }
+
+      .archive-body {
+        padding: 20px
+      }
+
+      .tag {
+        font-size: .68rem;
+        padding: 7px 10px
+      }
+
+      .archive-card h3 {
+        font-size: 1.45rem
+      }
+
+      .button {
+        padding-inline: 16px
+      }
+
+      .quote-panel {
+        padding: 20px
+      }
+
+      .quote-panel p {
+        font-size: 1.22rem
+      }
+
+      .nav-links {
+        left: 10px;
+        right: 10px
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      .hero-content,
+      .archive-card,
+      .archive-card img,
+      .reveal-on-view {
+        animation: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="site-nav" id="site-nav">
+    <div class="shell">
+      <a class="brand headline" href="index.html">Rahmaniya Higher Secondary Madrasa</a>
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"
+        aria-controls="primary-nav"><span></span></button>
+      <div class="nav-links" id="primary-nav">
+        <a href="index.html#heritage">Heritage</a>
+        <a class="current" href="media.html">Media Archive</a>
+        <a class="nav-cta" href="index.html#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+  <main>
+    <section class="hero">
+      <div class="hero-media"><img
+          src="https://lh3.googleusercontent.com/aida/ADBb0uiEE6VZnbW6OIY1GBxkHoLEeptpzXkw4WG57RNh0bFXPd87ema7fuRuIr7x26QbQ9ZbraKMg4LimUwjFNDPDgHTCUgUz3KLxeE7M8RAt2_hf0e5SbiQwSjdt_2Wy4ON-z-dYZwJCe5ToL03Kxyv2hseK0Y8bvFFYzZu0SxziLCL3sWWz3Uw0b2Twcm4RQO9-xEXnmaCKMcswqedDsD-czD7nTDpIRnWi22qfSqv0ORO9D_38b1zd0dvn5Er1MCNGrV_V4zeapYYIQ"
+          alt="Historical media archive banner" /></div>
+      <div class="hero-overlay"></div>
+      <div class="shell">
+        <div class="hero-content reveal-on-view">
+          <span class="eyebrow">Historical archives</span>
+          <h1 class="headline">Media archive and event chronicles</h1>
+          <p>A calmer, more structured archive page for browsing institutional milestones, celebrations, and
+            downloadable photo collections.</p>
+          <div><a class="button button-primary" href="https://drive.google.com/drive/folders/1A2B3C4D5E6F7G8H9I0Jsample"
+              target="_blank" rel="noreferrer">Open Google Drive</a></div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="shell">
+        <div class="section-header">
+          <div>
+            <p class="section-kicker">Archive Listing</p>
+            <h2 class="headline">Chronicles of Rahmaniya, arranged with consistent card rhythm.</h2>
+            <p>The layout now uses one clear grid, equal card spacing, and aligned button placement so every archive
+              entry reads cleanly on desktop and mobile.</p>
+          </div>
+          <a class="button button-primary" href="index.html">Back</a>
+        </div>
+        <div class="archive-grid" id="news-container"></div>
+      </div>
+    </section>
+    <section class="highlight-strip">
+      <div class="shell">
+        <div class="quote-panel">
+          <p class="headline">Preserving the memory of scholarship, celebration, and community so future generations
+            inherit more than images. They inherit context.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="shell">
+      <p>Rahmaniya Higher Secondary Madrasa media archive.</p>
+      <div class="footer-links"><a href="index.html">Homepage</a><a href="index.html#heritage">Heritage</a><a
+          href="index.html#contact">Contact</a></div>
+    </div>
+  </footer>
+  <script src="news.js"></script>
+  <script src="render-news.js"></script>
+  <script>
+    (function () {
+      const nav = document.getElementById("site-nav");
+      const toggle = document.getElementById("menu-toggle");
+      const links = document.querySelectorAll("#primary-nav a");
+
+      if (!nav || !toggle) {
+        return;
+      }
+
+      function closeMenu() {
+        nav.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
+      }
+
+      toggle.addEventListener("click", function () {
+        const isOpen = nav.classList.toggle("is-open");
+        toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      });
+
+      links.forEach(function (link) {
+        link.addEventListener("click", closeMenu);
+      });
+
+      window.addEventListener("resize", function () {
+        if (window.innerWidth > 760) {
+          closeMenu();
+        }
+      });
+    })();
+  </script>
+  <script>
+    (function () {
+      const items = document.querySelectorAll(".reveal-on-view");
+      if (!items.length) return;
+      if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        items.forEach(function (item) { item.classList.add("is-visible"); });
+        return;
+      }
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) entry.target.classList.add("is-visible");
+          else entry.target.classList.remove("is-visible");
+        });
+      }, { threshold: 0.3 });
+      items.forEach(function (item) { observer.observe(item); });
+    })();
+  </script>
+</body>
+
+</html>
